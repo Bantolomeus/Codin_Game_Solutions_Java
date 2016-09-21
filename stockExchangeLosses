@@ -1,0 +1,53 @@
+import java.util.*;
+import java.io.*;
+import java.math.*;
+
+/**
+ * Auto-generated code below aims at helping you parse
+ * the standard input according to the problem statement.
+ **/
+class Solution {
+
+    public static void main(String args[]) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int[] highestValue = {0,0};
+        int[] lowestValue = {0,0};
+        int difference = 0;
+        for (int i = 0; i < n; i++) {
+            int v = in.nextInt();
+            System.err.println(v);
+            
+            if(i == 0){
+                highestValue[0] = v;
+                lowestValue[0] = v;
+            }
+            if(v > highestValue[0]){
+                highestValue[0] = v;
+                highestValue[1] = i;
+                
+                if(lowestValue[1] > highestValue[1] && (difference < (highestValue[0] - lowestValue[0]))){
+                    difference = highestValue[0] - lowestValue[0];
+                }
+            }
+            if(v < lowestValue[0]){
+                lowestValue[0] = v;
+                lowestValue[1] = i;
+                
+                if(lowestValue[1] > highestValue[1] && (difference < (highestValue[0] - lowestValue[0]))){
+                    difference = highestValue[0] - lowestValue[0];
+                } 
+            }
+            if(highestValue[1] > lowestValue[1]){
+                if(v < highestValue[0] && difference < (highestValue[0] - v)){
+                    difference = highestValue[0] - v;
+                }
+            }
+        }
+
+        // Write an action using System.out.println()
+        // To debug: System.err.println("Debug messages...");
+
+        System.out.println(-difference);
+    }
+}
