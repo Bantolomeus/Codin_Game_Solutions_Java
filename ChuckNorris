@@ -12,34 +12,48 @@ class Solution {
         Scanner in = new Scanner(System.in);
         String message = in.nextLine();
         String output = "";
-        String oneChar;
         int countQuantity = 0;
+        StringBuilder binary = new StringBuilder();
+        byte[] bytes = message.getBytes();
+        int lengthOfMessage = 0;
+                   
+          for (byte b : bytes)
+          {
+             int val = b;
+             val <<= 1;
+             for (int o = 0; o < 7; o++)
+             {
+                binary.append((val & 128) == 0 ? 0 : 1);
+                val <<= 1;
+             }
+   
+             lengthOfMessage++;
+          } 
 
-        for(int i = 0; i < message.length(); i++){   
-            char character = 'a';    
-            int ascii = (int) character;
-            
-            for(){
-                oneChar = Character.toString(message.charAt(i));
-                System.err.println(message);
-                System.err.println(oneChar == "1");
-                countQuantity = 0;
-                while(i < message.length() && message.charAt(i) == 0){
-                    System.err.println("0");
-                    if(countQuantity == 0){
-                        output = output + "00 0";
-                    } else{
-                        output = output + "0";
+             int i = 0;
+             while(i < (7*lengthOfMessage)){
+                 countQuantity = 0;
+
+                    while((i < (7*lengthOfMessage)) && binary.toString().charAt(i) == '0'){              
+                        if(countQuantity == 0 && i == 0){
+                            output = output + "00 0";
+                        } else if(countQuantity == 0 && i != 0) {
+                            output = output + " 00 0";    
+                        } else{
+                            output = output + "0";
+                        }
+                        
+                        countQuantity++;
+                        i++;
                     }
-                    
-                    countQuantity++;
-                    i++;
-                }
+                
                 countQuantity = 0;
-                while(i < message.length() && message.charAt(i) == 1){
-                    System.err.println("1");
-                    if(countQuantity == 1){
+
+                while((i < (7*lengthOfMessage)) && binary.toString().charAt(i) == '1'){            
+                    if(countQuantity == 0 && i == 0){
                         output = output + "0 0";
+                    } else if(countQuantity == 0 && i != 0) {
+                        output = output + " 0 0";      
                     } else{
                         output = output + "0";
                     }
@@ -47,11 +61,7 @@ class Solution {
                     countQuantity++;
                     i++;    
                 }
-            }
-        }
-        // Write an action using System.out.println()
-        // To debug: System.err.println(message.charAt(i) == 0);
-
+             }
         System.out.println(output);
-    }
+        } 
 }
